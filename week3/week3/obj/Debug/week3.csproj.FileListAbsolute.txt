@@ -75,7 +75,6 @@ C:\Users\83549\source\repos\week3\week3\bin\System.Net.Http.Formatting.xml
 C:\Users\83549\source\repos\week3\week3\bin\System.Web.Http.xml
 C:\Users\83549\source\repos\week3\week3\bin\System.Web.Http.WebHost.xml
 C:\Users\83549\source\repos\week3\week3\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\83549\source\repos\week3\week3\obj\Debug\week3.csprojAssemblyReference.cache
 C:\Users\83549\source\repos\week3\week3\obj\Debug\week3.csproj.CoreCompileInputs.cache
 C:\Users\83549\source\repos\week3\week3\obj\Debug\week3.csproj.CopyComplete
 C:\Users\83549\source\repos\week3\week3\obj\Debug\week3.dll

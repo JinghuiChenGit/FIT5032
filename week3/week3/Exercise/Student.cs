@@ -29,6 +29,8 @@ namespace week3.Exercise
             Student result = new Student("", "");
 
             studentDictionary.TryGetValue(1, out result);
+
+           
         }
     }
 
