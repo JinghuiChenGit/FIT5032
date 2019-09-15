@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Customer_id" />
+    </Key>
+    <Property Name="Customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Account_id" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Contact_detail" Type="nvarchar(max)" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hotel_Owner">
+    <Key>
+      <PropertyRef Name="Owner_id" />
+    </Key>
+    <Property Name="Owner_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Account_id" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Contact_detail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hotels">
+    <Key>
+      <PropertyRef Name="Hotel_id" />
+    </Key>
+    <Property Name="Hotel_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Number_of_room" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Hotel_OwnerOwner_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Order_id" />
+    </Key>
+    <Property Name="Order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Check_in_date" Type="datetime" Nullable="false" />
+    <Property Name="Check_out_date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CustomerCustomer_id" Type="int" Nullable="false" />
+    <Property Name="RoomRoom_number" Type="real" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="Room_number" />
+    </Key>
+    <Property Name="Room_number" Type="real" Nullable="false" />
+    <Property Name="Num_of_guests" Type="smallint" Nullable="false" />
+    <Property Name="Available" Type="bit" Nullable="false" />
+    <Property Name="HotelHotel_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CustomerOrder">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Customer_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerCustomer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Hotel_OwnerHotel">
+    <End Role="Hotel_Owner" Type="Self.Hotel_Owner" Multiplicity="1" />
+    <End Role="Hotels" Type="Self.Hotels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel_Owner">
+        <PropertyRef Name="Owner_id" />
+      </Principal>
+      <Dependent Role="Hotels">
+        <PropertyRef Name="Hotel_OwnerOwner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HotelRoom">
+    <End Role="Hotels" Type="Self.Hotels" Multiplicity="1" />
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotels">
+        <PropertyRef Name="Hotel_id" />
+      </Principal>
+      <Dependent Role="Rooms">
+        <PropertyRef Name="HotelHotel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomOrder">
+    <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rooms">
+        <PropertyRef Name="Room_number" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="RoomRoom_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelDBModelStoreContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hotel_Owner" EntityType="Self.Hotel_Owner" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CustomerOrder" Association="Self.FK_CustomerOrder">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hotel_OwnerHotel" Association="Self.FK_Hotel_OwnerHotel">
+      <End Role="Hotel_Owner" EntitySet="Hotel_Owner" />
+      <End Role="Hotels" EntitySet="Hotels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HotelRoom" Association="Self.FK_HotelRoom">
+      <End Role="Hotels" EntitySet="Hotels" />
+      <End Role="Rooms" EntitySet="Rooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomOrder" Association="Self.FK_RoomOrder">
+      <End Role="Rooms" EntitySet="Rooms" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

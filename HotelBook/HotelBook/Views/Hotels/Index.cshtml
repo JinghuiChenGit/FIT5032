@@ -1,0 +1,46 @@
+﻿@model IEnumerable<HotelBook.Models.Hotel>
+
+@{
+    ViewBag.Title = "Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <h2>Find your Hotel</h2>
+
+<p>
+    @Html.ActionLink("Search", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number_of_room)
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number_of_room)
+        </td>
+      
+        <td>
+        
+            @Html.ActionLink("Details", "Details", new { id=item.Hotel_id }) 
+    </tr>
+}
+
+</table>
