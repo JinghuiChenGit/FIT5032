@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HotelBooking.Models.Image>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>What's New</h2>
+<p>@Html.ActionLink("Chat to everyone", "Chat", "Home")</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+   
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="col-md-4">
+            <img class="img-thumbnail" style="width:300px" src="@Url.Content("~/Uploads/"+item.Path)" />
+
+        </td>
+        <td class="col-md-6">
+            <div style="font-size:30px">
+                @Html.DisplayFor(modelItem => item.Name)
+            </div>
+            <div>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </div>
+            <p style="font-size:20px"> @Html.DisplayFor(modelItem => item.Content)</p>
+
+
+        </td>
+    </tr>
+}
+
+</table>

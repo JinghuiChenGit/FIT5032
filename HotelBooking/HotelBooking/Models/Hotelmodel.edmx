@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Hotelmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Hotels">
+          <Key>
+            <PropertyRef Name="Hotel_id" />
+          </Key>
+          <Property Name="Hotel_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Number_of_room" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Hotel_OwnerOwner_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Order_id" />
+          </Key>
+          <Property Name="Order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Check_in_date" Type="datetime" Nullable="false" />
+          <Property Name="Check_out_date" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CustomerCustomer_id" Type="int" Nullable="false" />
+          <Property Name="RoomRoom_number" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="Room_number" />
+          </Key>
+          <Property Name="Room_number" Type="real" Nullable="false" />
+          <Property Name="Num_of_guests" Type="smallint" Nullable="false" />
+          <Property Name="Available" Type="bit" Nullable="false" />
+          <Property Name="HotelHotel_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account_id" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users_Customer">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="Customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Contact_detail" Type="nvarchar(max)" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users_Hotel_Owner">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="Owner_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Contact_detail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="User_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Customer_inherits_User">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users_Customer" Type="Self.Users_Customer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Users_Customer">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder">
+          <End Role="Users_Customer" Type="Self.Users_Customer" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_Customer">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerCustomer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotel_Owner_inherits_User">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Users_Hotel_Owner" Type="Self.Users_Hotel_Owner" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Users_Hotel_Owner">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotel_OwnerHotel">
+          <End Role="Users_Hotel_Owner" Type="Self.Users_Hotel_Owner" Multiplicity="1" />
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users_Hotel_Owner">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Hotels">
+              <PropertyRef Name="Hotel_OwnerOwner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HotelRoom">
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="1" />
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="Hotel_id" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="HotelHotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Role_User">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="role" Type="Self.role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomOrder">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="Room_number" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="RoomRoom_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HotelmodelStoreContainer">
+          <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users_Customer" EntityType="Self.Users_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users_Hotel_Owner" EntityType="Self.Users_Hotel_Owner" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customer_inherits_User" Association="Self.FK_Customer_inherits_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Users_Customer" EntitySet="Users_Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder" Association="Self.FK_CustomerOrder">
+            <End Role="Users_Customer" EntitySet="Users_Customer" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotel_Owner_inherits_User" Association="Self.FK_Hotel_Owner_inherits_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Users_Hotel_Owner" EntitySet="Users_Hotel_Owner" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotel_OwnerHotel" Association="Self.FK_Hotel_OwnerHotel">
+            <End Role="Users_Hotel_Owner" EntitySet="Users_Hotel_Owner" />
+            <End Role="Hotels" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HotelRoom" Association="Self.FK_HotelRoom">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="Rooms" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Role_User" Association="Self.FK_Role_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="role" EntitySet="role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomOrder" Association="Self.FK_RoomOrder">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Hotelmodel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="HotelmodelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Hotels" EntityType="Hotelmodel.Hotel" />
+          <EntitySet Name="Orders" EntityType="Hotelmodel.Order" />
+          <EntitySet Name="Rooms" EntityType="Hotelmodel.Room" />
+          <AssociationSet Name="FK_CustomerOrder" Association="Hotelmodel.FK_CustomerOrder">
+            <End Role="Customer" EntitySet="Users" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotel_OwnerHotel" Association="Hotelmodel.FK_Hotel_OwnerHotel">
+            <End Role="Hotel_Owner" EntitySet="Users" />
+            <End Role="Hotel" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HotelRoom" Association="Hotelmodel.FK_HotelRoom">
+            <End Role="Hotel" EntitySet="Hotels" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoomOrder" Association="Hotelmodel.FK_RoomOrder">
+            <End Role="Room" EntitySet="Rooms" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="Hotelmodel.User" />
+          <EntitySet Name="roles" EntityType="Hotelmodel.role" />
+          <AssociationSet Name="FK_Role_User" Association="Hotelmodel.FK_Role_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="role" EntitySet="roles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customer" BaseType="Hotelmodel.User">
+          <Property Name="Customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Contact_detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Orders" Relationship="Hotelmodel.FK_CustomerOrder" FromRole="Customer" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Hotel_Owner" BaseType="Hotelmodel.User">
+          <Property Name="Owner_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Contact_detail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hotels" Relationship="Hotelmodel.FK_Hotel_OwnerHotel" FromRole="Hotel_Owner" ToRole="Hotel" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="Hotel_id" />
+          </Key>
+          <Property Name="Hotel_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Number_of_room" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Hotel_OwnerOwner_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hotel_Owner" Relationship="Hotelmodel.FK_Hotel_OwnerHotel" FromRole="Hotel" ToRole="Hotel_Owner" />
+          <NavigationProperty Name="Rooms" Relationship="Hotelmodel.FK_HotelRoom" FromRole="Hotel" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Order_id" />
+          </Key>
+          <Property Name="Order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Check_in_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Check_out_date" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerCustomer_id" Type="Int32" Nullable="false" />
+          <Property Name="RoomRoom_number" Type="Single" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Hotelmodel.FK_CustomerOrder" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Room" Relationship="Hotelmodel.FK_RoomOrder" FromRole="Order" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Room_number" />
+          </Key>
+          <Property Name="Room_number" Type="Single" Nullable="false" />
+          <Property Name="Num_of_guests" Type="Int16" Nullable="false" />
+          <Property Name="Available" Type="Boolean" Nullable="false" />
+          <Property Name="HotelHotel_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hotel" Relationship="Hotelmodel.FK_HotelRoom" FromRole="Room" ToRole="Hotel" />
+          <NavigationProperty Name="Orders" Relationship="Hotelmodel.FK_RoomOrder" FromRole="Room" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_CustomerOrder">
+          <End Type="Hotelmodel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Hotelmodel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerCustomer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotel_OwnerHotel">
+          <End Type="Hotelmodel.Hotel_Owner" Role="Hotel_Owner" Multiplicity="1" />
+          <End Type="Hotelmodel.Hotel" Role="Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel_Owner">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Hotel">
+              <PropertyRef Name="Hotel_OwnerOwner_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HotelRoom">
+          <End Type="Hotelmodel.Hotel" Role="Hotel" Multiplicity="1" />
+          <End Type="Hotelmodel.Room" Role="Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotel">
+              <PropertyRef Name="Hotel_id" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="HotelHotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoomOrder">
+          <End Type="Hotelmodel.Room" Role="Room" Multiplicity="1" />
+          <End Type="Hotelmodel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="Room_number" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="RoomRoom_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account_id" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="roles" Relationship="Hotelmodel.FK_Role_User" FromRole="User" ToRole="role" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Role1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Hotelmodel.FK_Role_User" FromRole="role" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Role_User">
+          <End Type="Hotelmodel.User" Role="User" Multiplicity="1" />
+          <End Type="Hotelmodel.role" Role="role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HotelmodelStoreContainer" CdmEntityContainer="HotelmodelContainer">
+    <EntitySetMapping Name="Hotels">
+      <EntityTypeMapping TypeName="IsTypeOf(Hotelmodel.Hotel)">
+        <MappingFragment StoreEntitySet="Hotels">
+          <ScalarProperty Name="Hotel_id" ColumnName="Hotel_id" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Number_of_room" ColumnName="Number_of_room" />
+          <ScalarProperty Name="Hotel_OwnerOwner_id" ColumnName="Hotel_OwnerOwner_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(Hotelmodel.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+          <ScalarProperty Name="Check_in_date" ColumnName="Check_in_date" />
+          <ScalarProperty Name="Check_out_date" ColumnName="Check_out_date" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="CustomerCustomer_id" ColumnName="CustomerCustomer_id" />
+          <ScalarProperty Name="RoomRoom_number" ColumnName="RoomRoom_number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="IsTypeOf(Hotelmodel.Room)">
+        <MappingFragment StoreEntitySet="Rooms">
+          <ScalarProperty Name="Room_number" ColumnName="Room_number" />
+          <ScalarProperty Name="Num_of_guests" ColumnName="Num_of_guests" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="HotelHotel_id" ColumnName="HotelHotel_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(Hotelmodel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="Account_id" ColumnName="Account_id" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Hotelmodel.Customer)">
+        <MappingFragment StoreEntitySet="Users_Customer">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="Customer_id" ColumnName="Customer_id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Contact_detail" ColumnName="Contact_detail" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+      <EntityTypeMapping TypeName="IsTypeOf(Hotelmodel.Hotel_Owner)">
+        <MappingFragment StoreEntitySet="Users_Hotel_Owner">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="Owner_id" ColumnName="Owner_id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Contact_detail" ColumnName="Contact_detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="Hotelmodel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="Role1" ColumnName="Role" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

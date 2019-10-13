@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Hotelmodel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="HotelmodelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Hotels" EntityType="Hotelmodel.Hotel" />
+    <EntitySet Name="Orders" EntityType="Hotelmodel.Order" />
+    <EntitySet Name="Rooms" EntityType="Hotelmodel.Room" />
+    <AssociationSet Name="FK_CustomerOrder" Association="Hotelmodel.FK_CustomerOrder">
+      <End Role="Customer" EntitySet="Users" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hotel_OwnerHotel" Association="Hotelmodel.FK_Hotel_OwnerHotel">
+      <End Role="Hotel_Owner" EntitySet="Users" />
+      <End Role="Hotel" EntitySet="Hotels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HotelRoom" Association="Hotelmodel.FK_HotelRoom">
+      <End Role="Hotel" EntitySet="Hotels" />
+      <End Role="Room" EntitySet="Rooms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoomOrder" Association="Hotelmodel.FK_RoomOrder">
+      <End Role="Room" EntitySet="Rooms" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="Hotelmodel.User" />
+    <EntitySet Name="roles" EntityType="Hotelmodel.role" />
+    <AssociationSet Name="FK_Role_User" Association="Hotelmodel.FK_Role_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="role" EntitySet="roles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer" BaseType="Hotelmodel.User">
+    <Property Name="Customer_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Contact_detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Orders" Relationship="Hotelmodel.FK_CustomerOrder" FromRole="Customer" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Hotel_Owner" BaseType="Hotelmodel.User">
+    <Property Name="Owner_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Contact_detail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Hotels" Relationship="Hotelmodel.FK_Hotel_OwnerHotel" FromRole="Hotel_Owner" ToRole="Hotel" />
+  </EntityType>
+  <EntityType Name="Hotel">
+    <Key>
+      <PropertyRef Name="Hotel_id" />
+    </Key>
+    <Property Name="Hotel_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Number_of_room" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Hotel_OwnerOwner_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Hotel_Owner" Relationship="Hotelmodel.FK_Hotel_OwnerHotel" FromRole="Hotel" ToRole="Hotel_Owner" />
+    <NavigationProperty Name="Rooms" Relationship="Hotelmodel.FK_HotelRoom" FromRole="Hotel" ToRole="Room" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Order_id" />
+    </Key>
+    <Property Name="Order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Check_in_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Check_out_date" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CustomerCustomer_id" Type="Int32" Nullable="false" />
+    <Property Name="RoomRoom_number" Type="Single" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Hotelmodel.FK_CustomerOrder" FromRole="Order" ToRole="Customer" />
+    <NavigationProperty Name="Room" Relationship="Hotelmodel.FK_RoomOrder" FromRole="Order" ToRole="Room" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Room_number" />
+    </Key>
+    <Property Name="Room_number" Type="Single" Nullable="false" />
+    <Property Name="Num_of_guests" Type="Int16" Nullable="false" />
+    <Property Name="Available" Type="Boolean" Nullable="false" />
+    <Property Name="HotelHotel_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Hotel" Relationship="Hotelmodel.FK_HotelRoom" FromRole="Room" ToRole="Hotel" />
+    <NavigationProperty Name="Orders" Relationship="Hotelmodel.FK_RoomOrder" FromRole="Room" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_CustomerOrder">
+    <End Type="Hotelmodel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="Hotelmodel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomerCustomer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Hotel_OwnerHotel">
+    <End Type="Hotelmodel.Hotel_Owner" Role="Hotel_Owner" Multiplicity="1" />
+    <End Type="Hotelmodel.Hotel" Role="Hotel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel_Owner">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="Hotel">
+        <PropertyRef Name="Hotel_OwnerOwner_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HotelRoom">
+    <End Type="Hotelmodel.Hotel" Role="Hotel" Multiplicity="1" />
+    <End Type="Hotelmodel.Room" Role="Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel">
+        <PropertyRef Name="Hotel_id" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="HotelHotel_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoomOrder">
+    <End Type="Hotelmodel.Room" Role="Room" Multiplicity="1" />
+    <End Type="Hotelmodel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Room_number" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="RoomRoom_number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_id" />
+    </Key>
+    <Property Name="User_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Account_id" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="roles" Relationship="Hotelmodel.FK_Role_User" FromRole="User" ToRole="role" />
+  </EntityType>
+  <EntityType Name="role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Role1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="Hotelmodel.FK_Role_User" FromRole="role" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Role_User">
+    <End Type="Hotelmodel.User" Role="User" Multiplicity="1" />
+    <End Type="Hotelmodel.role" Role="role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="User_id" />
+      </Principal>
+      <Dependent Role="role">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

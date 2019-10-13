@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5a8285e1e6c6422a8da57b0ab3dfc388" Name="Diagram1" ZoomLevel="53" >
+        <EntityTypeShape EntityType="Hotelmodel.Customer" Width="1.5" PointX="6.875" PointY="4.625" />
+        <EntityTypeShape EntityType="Hotelmodel.Hotel_Owner" Width="1.5" PointX="0.5" PointY="3" />
+        <EntityTypeShape EntityType="Hotelmodel.Hotel" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="Hotelmodel.Order" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="Hotelmodel.Room" Width="1.5" PointX="5.25" PointY="1.125" />
+        <AssociationConnector Association="Hotelmodel.FK_CustomerOrder" />
+        <AssociationConnector Association="Hotelmodel.FK_Hotel_OwnerHotel" />
+        <AssociationConnector Association="Hotelmodel.FK_HotelRoom" />
+        <AssociationConnector Association="Hotelmodel.FK_RoomOrder" />
+        <EntityTypeShape EntityType="Hotelmodel.User" Width="1.5" PointX="3.625" PointY="4.875" />
+        <InheritanceConnector EntityType="Hotelmodel.Customer" />
+        <InheritanceConnector EntityType="Hotelmodel.Hotel_Owner" />
+        <EntityTypeShape EntityType="Hotelmodel.role" Width="1.5" PointX="5.875" PointY="7.875" />
+        <AssociationConnector Association="Hotelmodel.FK_Role_User" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
